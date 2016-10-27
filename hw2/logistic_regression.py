@@ -4,7 +4,7 @@ import csv
 import pickle
 import sys
 
-epoch = 500000
+epoch = 20000
 size = 4001
 feSize = 58
 
@@ -12,7 +12,7 @@ xArray = np.ones((size,feSize))
 yHat = np.zeros((size,1))
 bias = np.ones((size,1))
 #weight = np.zeros((feSize,1))
-weight = 0.001*np.random.random_sample((58,1))
+weight = 0.01*np.random.random_sample((58,1))
 
 f = open(sys.argv[1],'r')
 reader = csv.reader(f)
@@ -27,7 +27,7 @@ xArray = xArray.astype('float32')
 yHat = yHat.astype('float32')
 #linear regression
 
-lr = 0.00007
+lr = 0.01
 loss = 0
 y = 0
 lamda = 0.01
@@ -48,16 +48,14 @@ total = 0
 for i in range(epoch):
     y = 1/(1+np.exp(-np.dot(xArray,weight)))
     grd = np.dot(np.transpose(xArray),(y - yHat))+2*lamda*weight
-    '''
+    
     moment = r1*moment+(1-r1)*grd 
     v = r2*v+(1-r2)*grd*grd
     mHat = moment/(1-r1**(i+1))
     vHat = v/(1-r2**(i+1))
     weight = weight - lr/(np.sqrt(vHat)+epi)*mHat
-    '''
-    total = total + np.sum(grd**2)/size
-    ada = np.sqrt(total/(1+i))
-    weight = weight -lr/ada*grd    
+    
+    
     if i % 1000 == 0:
         print str(i)+' '+str(loss)
         for j in range(len(y)):
