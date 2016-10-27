@@ -1,22 +1,18 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import csv
 import pickle
 import sys
 
-validation = 1
 epoch = 1000
-size = 4001-validation
+size = 4001
 feSize = 57
 nuNum = 40
 
 xArray = np.ones((size,feSize+1))
 yHat = np.zeros((size,1))
-validX = np.ones((validation,feSize+1))
-validY = np.zeros((validation,1))
 weight1 = np.random.rand(feSize+1, nuNum)
 weight2 = np.random.rand(nuNum, 1)
-#weight1 = np.zeros((feSize+1, nuNum))
-#weight2 = np.zeros((nuNum, 1))
 
 #read training data
 f = open(sys.argv[1],'r')
@@ -27,14 +23,10 @@ myData = np.asarray(myList)
 myData = np.delete(myData,0,1)
 xArray[:,0:feSize] = np.delete(myData[0:size,:],feSize,1)
 yHat[:,0] = myData[0:size,feSize]
-validX = myData[size:size+validation,:]
-validY = myData[size:size+validation,feSize]
 
 
 xArray = xArray.astype('float32')
 yHat = yHat.astype('float32')
-validX = validX.astype('float32')
-validY = validY.astype('float32')
 
 a1 = np.zeros((size, nuNum))
 a2 = np.zeros((size, 1))
@@ -73,7 +65,7 @@ for i in range(epoch):
     vHat2 = v2/(1-r2**(i+1))
     weight1 = weight1 - lr/(np.sqrt(vHat1)+epi)*mHat1
     weight2 = weight2 - lr/(np.sqrt(vHat2)+epi)*mHat2
-    #weight = weight -lr*grd    
+    '''    
     if i % 1 == 0:
         for j in range(len(a2)):
             if a2[j] <= 0.0000000000000001:
@@ -85,22 +77,7 @@ for i in range(epoch):
 
         print 'loss '+str(i)+' '+str(loss)
         '''
-        #validation
-        correct = 0
-        val = np.zeros((validation,1))
-        aa1 = 1/(1+np.exp(-np.dot(validX, weight1)))
-        aa1[:, nuNum-1] = np.ones((validX.shape[0],)) #the last nu is the bias
-        aa2 = 1/(1+np.exp(-np.dot(aa1, weight2)))
-        for j in range(aa2.shape[0]):
-            if aa2[j] >= 0.5:
-                val[j] = 1
-            else:
-                val[j] = 0
-            if val[j] == validY[j]:
-                correct = correct+1
-                
-        print 'val = '+str(((float)(correct)/validation))
-        '''        
+
 model = (weight1, weight2, nuNum, feSize)
 pickle.dump(model, open(sys.argv[2],'wb+'))
 
