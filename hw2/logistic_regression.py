@@ -32,11 +32,6 @@ loss = 0
 y = 0
 lamda = 0.01
 
-file_dir = "weightInit.csv"
-with open(file_dir, 'wb') as f:
-    for j in range(feSize):
-        f.write(str(float(weight[j,:]))+"\n")
-
 
 r1 = 0.9
 r2 = 0.999
@@ -55,7 +50,7 @@ for i in range(epoch):
     vHat = v/(1-r2**(i+1))
     weight = weight - lr/(np.sqrt(vHat)+epi)*mHat
     
-    
+    '''    
     if i % 1000 == 0:
         print str(i)+' '+str(loss)
         for j in range(len(y)):
@@ -66,6 +61,7 @@ for i in range(epoch):
         loss = -(np.dot(np.transpose(yHat), np.log(y))
                 +np.dot(np.transpose(1-yHat), np.log(1-y))-
                 lamda*np.dot(np.transpose(weight),weight))/size
+    '''
 
 
 model = (weight, feSize)
