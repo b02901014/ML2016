@@ -17,11 +17,9 @@ myData = np.asarray(myList)
 testX = np.ones((myData.shape[0],feSize))
 myData = np.delete(myData,0,1)
 testX[:,0:feSize-1] = myData
-print testX.shape
-print weight.shape
 
 testX = testX.astype('float32')
-print testX
+
 
 file_dir = sys.argv[3]
 with open(file_dir, 'wb') as f:
