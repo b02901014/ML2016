@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-iteration = 500000
+iteration = 2
 size = 5652;
 allData = np.zeros((18,5760))
 
@@ -58,8 +58,6 @@ for i in range(iteration):
     grd = 2*np.dot(np.transpose(xArray),(y-yHat))+2*landa*weight
     loss = (np.dot(np.transpose(y-yHat),(y-yHat))+landa*np.dot(np.transpose(weight),weight))/5652
     weight = weight - grd*lr
-    if i%1000 == 0:
-        print loss
 
 # running test data
 f = open('test_X.csv','r')

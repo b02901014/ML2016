@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-iteration = 500000
+iteration = 2
 size = 5652;
 allData = np.zeros((18,5760))
 
