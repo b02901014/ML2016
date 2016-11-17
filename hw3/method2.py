@@ -44,8 +44,8 @@ def build_model():
     return model
 
 
-labelData = pickle.load(open(sys.argv[1]+'all_label.p','r'))
-unlabelData = pickle.load(open(sys.argv[1]+'all_unlabel.p','r'))
+labelData = pickle.load(open(sys.argv[1]+'all_label.p','rb'))
+unlabelData = pickle.load(open(sys.argv[1]+'all_unlabel.p','rb'))
 #testData = pickle.load(open(sys.argv[1]+'test.p','r'))
 
 labelData = np.reshape(np.asarray(labelData), (5000,3,32,32)).astype('float32')/255.
