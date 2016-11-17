@@ -28,7 +28,7 @@ inputImg = Input(shape=(3,32,32))
 laSize = 5000
 classNum = 10
 
-testData = pickle.load(open(sys.argv[1]+'test.p','r'))
+testData = pickle.load(open(sys.argv[1]+'test.p','rb'))
 testData = np.asarray(testData['data'])
 testData = np.reshape(np.asarray(testData), (10000,3,32,32)).astype('float32')/255.
 json_file = open('encod.json','r')
